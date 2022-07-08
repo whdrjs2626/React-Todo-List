@@ -23,4 +23,4 @@ const TodoListTemplate = ({form, children}) => {
     );
 };
 
-export default TodoListTemplates;
+export default TodoListTemplate;
