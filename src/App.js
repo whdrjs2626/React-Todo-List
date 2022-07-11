@@ -45,12 +45,40 @@ class App extends Component {
         }
     }
 
+    handleToggle = (id) => { // 체크하거나 푸는 함수
+        const { todos } = this.state;
+
+        // 파라미터로 받은 id 를 가지고 몇번째 아이템인지 찾습니다.
+        const index = todos.findIndex(todo => todo.id === id);
+        const selected = todos[index]; // 선택한 객체
+
+        const nextTodos = [...todos]; // 배열을 복사
+
+        // 기존의 값들을 복사하고, checked 값을 덮어쓰기
+        nextTodos[index] = {
+          ...selected,
+          checked: !selected.checked
+        };
+
+        this.setState({
+          todos: nextTodos
+        });
+    }
+
+    handleRemove = (id) => {
+        const { todos } = this.state;
+        this.setState({
+            todos: todos.filter(todo => todo.id !== id) // 파라미터로 받은 id를 갖고 있지 않는 배열을 새로 생성하여 todos에 저장
+        });
+    }
     render() {
-        const { input } = this.state;
+        const { input, todos } = this.state;
         const {
             handleChange,
             handleCreate,
-            handleKeyPress
+            handleKeyPress,
+            handleToggle,
+            handleRemove
         } = this; // this.handleChange와 같이 this로 접근해야 하는 작업 생략
         return (
             <TodoListTemplate form={(
@@ -65,7 +93,8 @@ class App extends Component {
                     App에서 TodoListTemplate 컴포넌틀를 불러와서 사용
                     Form 컴포넌트를 App에 렌더링
                 */}
-                <TodoItemList/>
+                <TodoItemList todos={todos} onToggle={handleToggle} onRemove={handleRemove}/>
+                {/* todos안의 객체들을 화면에 보여주기 위해 todos 배열을 컴포넌트 배열로 변환해야 함 - 일단 TodoItemList에 todos를 전달 */}
             </TodoListTemplate>
         )
     }
