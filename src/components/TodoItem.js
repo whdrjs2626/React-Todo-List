@@ -25,6 +25,13 @@ import './TodoItem.css';
     'todo-text %{ checked ? ' checked' : '' }'
 */
 class TodoItem extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        /*
+        해당 컴포넌트가 리렌더링(업데이트)되어야할 때는 checked값이 바뀔 때이다.
+         */
+        return this.props.checked !== nextProps.checked;
+    }
+
     render() {
         const {text, checked, id, onToggle, onRemove} = this.props;
 
