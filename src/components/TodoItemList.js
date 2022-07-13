@@ -11,23 +11,24 @@ import TodoItem from './TodoItem'
  */
 class TodoItemList extends Component {
 
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState) { // input에 텍스트 입력 시마다 아이템을 리렌더링하는 것을 방지
         /*
         해당 메소드는 컴포넌트 라이프 사이클 메소드 중 하나로 컴포넌트가 리렌더링 할지 말지를 결정함
         이게 구현되어 있지 않으면 언제나 true를 반환
         이를 구현하는 경우 업데이트에 영향을 끼치는 조건을 리턴하자
         현재 todos가 변경되면 리렌더링해야 하기 때문에 이를 비교하여 리턴한다.
         이를 통해 원래 글자 하나 입력할 때마다 렌더링 되었던 것을 처음에만 렌더링하게 한다.
+        원래는 부모의 state인 input이 변경되면서 리렌더링되서 자식 컴포넌트인 TodoItemList도 리렌더링되는데 이를 조건을 걸어 방지한다.
          */
         return this.props.todos !== nextProps.todos;
     }
 
     render() {
-        const { todos, onToggle, onRemove, color } = this.props;
+        const { todos, onToggle, onRemove} = this.props;
 
         // 아래를 보면 map함수를 이용해 todos 객체 배열의 원소(객체)를 TodoItem 컴포넌트로 변경하여 todoList라는 TodoItem 컴포넌트 배열로 변환함
         const todoList = todos.map(
-            ({id, text, checked}) => ( // 여기서 props로 전달하기 위해 비구조화 할당함
+            ({id, text, checked, color}) => ( // 여기서 props로 전달하기 위해 비구조화 할당함
                 <TodoItem
                     id={id}
                     text={text}
