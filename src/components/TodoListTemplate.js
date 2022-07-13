@@ -7,12 +7,15 @@ import './TodoListTemplate.css'
     children은 해당 템플릿 태그 내부 내용에 들어갈 것
     form은 input, button이 있는 컴포넌트를 렌더링할 때 사용할 것
 */
-const TodoListTemplate = ({form, children}) => {
+const TodoListTemplate = ({form, palette, children}) => {
     return (
         <main className="todo-list-template">
             <div className="title">
                 오늘 할 일
             </div>
+            <section className="palette-wrapper">
+                {palette}
+            </section>
             <section className="form-wrapper">
                 {form}
             </section>

@@ -15,6 +15,7 @@ import './TodoItem.css';
     근데 onRemove를 호출하기 전에 e.stopPropagation()을 호출한다.
     위 함수를 호출하지 않으면 클릭 시 해당 DOM의 부모의 클릭 이벤트에 연결된 onToggle도 실행됨 즉 onRemove > onToggle
     이것(이벤트의 확산)을 막는 것이 e.stopPropagation()
+    즉 삭제 부분에 들어간 이벤트가 해당 부모의 이벤트까지 전달되지 않게 해준다.
 */
 /*
     `todo-text ${checked && 'checked'}`
@@ -33,7 +34,7 @@ class TodoItem extends Component {
     }
 
     render() {
-        const {text, checked, id, onToggle, onRemove} = this.props;
+        const {text, checked, id, onToggle, onRemove, color} = this.props;
 
         return (
             <div className="todo-item" onClick={() => onToggle(id)}>
@@ -41,7 +42,7 @@ class TodoItem extends Component {
                     e.stopPropagation() // onToggle이 실행되지 않도록 함
                     onRemove(id)}}>&times;</div>
                 <div className={`todo-text ${checked && 'checked'}`}>
-                    <div>{text}</div>
+                    <div style={{color: color}}>{text}</div>
                 </div>
                 { checked && (<div className="check-mark">&#x2713;</div>) }
             </div>

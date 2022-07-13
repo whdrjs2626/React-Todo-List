@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import TodoItem from './TodoItem'
 
 /*
+    TodoItem 컴포넌트 여러 개를 렌더링해주는 역할 수행
+    리스트를 렌더링하는 경우 특히 보여주는 리스트가 동적인 경우 클래스형 컴포넌트가 적합하다. -> 성능 최적화에 용이하기 때문
     이 컴포넌트는 3가지 props를 받는다
-    todos - t o d o 객체들이 들어있는 배열
+    todos - todo 객체들이 들어있는 배열
     onToggle - 체크박스 ON/OFF
     onRemove - 아이템 삭제 함수
  */
@@ -21,7 +23,7 @@ class TodoItemList extends Component {
     }
 
     render() {
-        const { todos, onToggle, onRemove } = this.props;
+        const { todos, onToggle, onRemove, color } = this.props;
 
         // 아래를 보면 map함수를 이용해 todos 객체 배열의 원소(객체)를 TodoItem 컴포넌트로 변경하여 todoList라는 TodoItem 컴포넌트 배열로 변환함
         const todoList = todos.map(
@@ -33,6 +35,7 @@ class TodoItemList extends Component {
                     onToggle={onToggle}
                     onRemove={onRemove}
                     key={id}
+                    color={color}
                 />
             )
         );

@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import TodoListTemplate from "./components/TodoListTemplate";
 import Form from "./components/Form";
 import TodoItemList from "./components/TodoItemList";
+import Palette from "./components/Palette";
+
+const colors = ['#343a40', '#f03e3e', '#12b886', '#228ae6'];
 
 class App extends Component {
 
     id = 3 // todo 객체들을 구분하기 위한 고유 번호 / 데이터가 추가될 떄마다 1씩 증가
+
 
     state = {
         input: '',
@@ -13,7 +17,8 @@ class App extends Component {
             { id: 0, text: ' 리액트 소개', checked: false },
             { id: 1, text: ' 리액트 소개', checked: true },
             { id: 2, text: ' 리액트 소개', checked: false }
-        ]
+        ],
+        color: '#343a40'
     }
 
     handleChange = (e) => {
@@ -23,7 +28,7 @@ class App extends Component {
     }
 
     handleCreate = () => {
-        const { input, todos } = this.state;
+        const { input, todos, color } = this.state;
         this.setState({
             input: '', // 인풋 비우고
             // concat 을 사용하여 배열에 추가
@@ -34,7 +39,8 @@ class App extends Component {
             id: this.id++,
             text: input,
             checked: false
-            })
+            }),
+            color
         });
     }
 
@@ -71,15 +77,24 @@ class App extends Component {
             todos: todos.filter(todo => todo.id !== id) // 파라미터로 받은 id를 갖고 있지 않는 배열을 새로 생성하여 todos에 저장
         });
     }
+
+    handleColorChange = (color) => {
+        this.setState({
+            color
+        })
+    }
+
     render() {
-        const { input, todos } = this.state;
+        const { input, todos, color } = this.state;
         const {
             handleChange,
             handleCreate,
             handleKeyPress,
             handleToggle,
-            handleRemove
+            handleRemove,
+            handleColorChange
         } = this; // this.handleChange와 같이 this로 접근해야 하는 작업 생략
+        // this는 해당 컴포넌트를 의미한다. 즉 Ap
         return (
             <TodoListTemplate form={(
                 <Form
@@ -87,13 +102,15 @@ class App extends Component {
                     onKeyPress={handleKeyPress}
                     onChange={handleChange}
                     onCreate={handleCreate}
+                    color={color}
                 />
-            )}>
+            )} palette = {(<Palette colors={colors} selected={color} onSelect={handleColorChange}/>)}>
+
                 {/*
                     App에서 TodoListTemplate 컴포넌틀를 불러와서 사용
                     Form 컴포넌트를 App에 렌더링
                 */}
-                <TodoItemList todos={todos} onToggle={handleToggle} onRemove={handleRemove}/>
+                <TodoItemList todos={todos} onToggle={handleToggle} onRemove={handleRemove} color={color}/>
                 {/* todos안의 객체들을 화면에 보여주기 위해 todos 배열을 컴포넌트 배열로 변환해야 함 - 일단 TodoItemList에 todos를 전달 */}
             </TodoListTemplate>
         )
