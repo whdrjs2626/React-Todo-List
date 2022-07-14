@@ -27,9 +27,7 @@ import './TodoItem.css';
 */
 class TodoItem extends Component {
     shouldComponentUpdate(nextProps, nextState) { // 아이템을 추가 / 삭제할 때 이미 있는 아이템도 리렌더링하는 것을 방지
-        /*
-        해당 컴포넌트가 리렌더링(업데이트)되어야할 때는 checked값이 바뀔 때이다.
-         */
+        // 부모로부터 받은 checked 값이 변경될 때만 해당 컴포넌트를 리렌더링하도록 설정
         return this.props.checked !== nextProps.checked;
     }
 

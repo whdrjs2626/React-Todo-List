@@ -26,9 +26,9 @@ class TodoItemList extends Component {
     render() {
         const { todos, onToggle, onRemove} = this.props;
 
-        // 아래를 보면 map함수를 이용해 todos 객체 배열의 원소(객체)를 TodoItem 컴포넌트로 변경하여 todoList라는 TodoItem 컴포넌트 배열로 변환함
+        // map함수를 이용해 todos 객체 배열의 원소(객체)를 TodoItem 컴포넌트로 변경하여 todoList라는 TodoItem 컴포넌트 배열로 변환함
         const todoList = todos.map(
-            ({id, text, checked, color}) => ( // 여기서 props로 전달하기 위해 비구조화 할당함
+            ({id, text, checked, color}) => ( // 여기서 props로 전달하기 위해 todos의 요소들을 비구조화 할당함
                 <TodoItem
                     id={id}
                     text={text}
